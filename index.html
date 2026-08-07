@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Course Counselling Night — Charles Campbell College</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --flinders-gold:#FFD300;
+  --flinders-navy:#232D4B;
+  --adelaide-indigo:#1A1A5C;
+  --ccc-navy:#0F2C52;
+  --ccc-blue:#8FBCE6;
+  --ccc-red:#CE1E3C;
+  --ink:#1B2430;
+  --muted:#6B7684;
+  --line:#DDE3EA;
+  --grey-fill:#F1F3F6;
+  --card:#FFFFFF;
+  --radius:10px;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  color:var(--ink);
+  background:var(--adelaide-indigo);
+  background-image:linear-gradient(112deg,
+    var(--flinders-gold) 0%, var(--flinders-gold) 34%,
+    var(--adelaide-indigo) 34%, var(--adelaide-indigo) 100%);
+  background-attachment:fixed;
+  min-height:100vh;
+  padding:40px 20px 64px;
+  -webkit-font-smoothing:antialiased;
+}
+
+.card{
+  max-width:860px;
+  margin:0 auto;
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:0 18px 50px rgba(10,20,40,.28);
+  padding:44px 48px 48px;
+}
+
+/* ---------- header ---------- */
+.brandbar{text-align:left;}
+.brandbar img.ccc{height:140px;width:auto;}
+.unis{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin:0px 0 20px;
+}
+.uni-tile{
+  border-radius:var(--radius);
+  height:78px;
+  display:flex;align-items:center;justify-content:center;
+  padding:12px 18px;
+  overflow:hidden;
+}
+.uni-tile.flinders{background:var(--flinders-gold);}
+.uni-tile.adelaide{background:#fff;border:1px solid var(--line);}
+.uni-tile.flinders img{height:150px;width:auto;}      /* mark is inset in the file */
+.uni-tile.adelaide img{height:80px;width:auto;}
+
+h1{
+  font-size:30px;line-height:1.2;font-weight:700;
+  letter-spacing:-.02em;margin:0 0 12px;color:var(--ccc-navy);
+}
+.lede{font-size:16px;line-height:1.55;color:var(--muted);margin:0 0 8px;max-width:75ch;}
+
+hr.rule{border:0;border-top:1px solid var(--line);margin:34px 0;}
+
+/* ---------- grid ---------- */
+.step-label{font-size:15px;font-weight:600;margin:0 0 18px;}
+.session{margin-bottom:26px;}
+.session-range{
+  font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 10px;
+}
+.grid-head,.grid-row{display:grid;grid-template-columns:88px 1fr 1fr;gap:10px;}
+.grid-head{margin-bottom:8px;}
+.grid-head div{
+  font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);text-align:center;
+}
+.grid-head div:first-child{text-align:left;}
+.grid-row{margin-bottom:8px;}
+.rowtime{
+  display:flex;align-items:center;font-size:14px;font-weight:500;
+  font-variant-numeric:tabular-nums;
+}
+.slot{
+  border:1px solid var(--line);background:#fff;border-radius:8px;
+  padding:12px 8px;font:inherit;font-size:14px;font-weight:500;
+  color:var(--ink);cursor:pointer;text-align:center;width:100%;
+  transition:border-color .12s,background .12s,transform .06s;
+}
+.slot:hover:not(:disabled){border-color:var(--ccc-navy);background:#F7FAFD;}
+.slot:active:not(:disabled){transform:translateY(1px);}
+.slot:focus-visible{outline:3px solid var(--ccc-blue);outline-offset:2px;}
+.slot[aria-pressed="true"]{
+  background:var(--ccc-navy);border-color:var(--ccc-navy);color:#fff;font-weight:600;
+}
+.slot:disabled{
+  background:var(--grey-fill);border-color:var(--grey-fill);
+  color:#A6AFBB;cursor:not-allowed;
+}
+
+/* ---------- form ---------- */
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;}
+.field{display:flex;flex-direction:column;}
+.field.wide{grid-column:1 / -1;}
+label{font-size:13px;font-weight:600;margin-bottom:6px;}
+input{
+  font:inherit;font-size:15px;padding:11px 12px;
+  border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);
+}
+input:focus{outline:3px solid var(--ccc-blue);outline-offset:1px;border-color:var(--ccc-navy);}
+input[readonly]{background:var(--grey-fill);color:var(--muted);}
+.field-error{font-size:12.5px;color:var(--ccc-red);margin-top:5px;min-height:1px;}
+input.invalid{border-color:var(--ccc-red);}
+
+.btn{
+  font:inherit;font-size:15px;font-weight:600;
+  background:var(--ccc-navy);color:#fff;border:0;border-radius:8px;
+  padding:14px 26px;cursor:pointer;margin-top:26px;
+}
+.btn:hover{background:#164274;}
+.btn:focus-visible{outline:3px solid var(--ccc-blue);outline-offset:2px;}
+.btn:disabled{opacity:.55;cursor:not-allowed;}
+.btn.secondary{background:#fff;color:var(--ccc-navy);border:1.5px solid var(--ccc-navy);}
+
+/* ---------- banners ---------- */
+.banner{
+  border-radius:8px;padding:14px 16px;font-size:14.5px;line-height:1.5;
+  margin-bottom:22px;border-left:4px solid;
+}
+.banner.error{background:#FDF0F3;border-color:var(--ccc-red);color:#7A0F23;}
+.banner.info{background:#F1F5FA;border-color:var(--ccc-navy);color:var(--ccc-navy);}
+
+/* ---------- confirmation ---------- */
+.confirm h2{font-size:24px;margin:0 0 14px;color:var(--ccc-navy);letter-spacing:-.01em;}
+.confirm p{font-size:16px;line-height:1.6;margin:0 0 14px;}
+.refbox{
+  background:var(--grey-fill);border-radius:8px;padding:16px 18px;margin:20px 0;
+}
+.refbox .lbl{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+.refbox .val{font-size:26px;font-weight:700;letter-spacing:.08em;font-variant-numeric:tabular-nums;}
+.small{font-size:13.5px;color:var(--muted);line-height:1.55;}
+
+.disclaimer{
+  font-size:14px;line-height:1.55;color:var(--muted);
+  background:var(--grey-fill);border-radius:8px;padding:14px 16px;margin-top:24px;
+}
+.hidden{display:none !important;}
+.loading{padding:40px 0;text-align:center;color:var(--muted);font-size:15px;}
+
+@media (max-width:640px){
+  body{padding:20px 12px 40px;}
+  .card{padding:26px 20px 32px;}
+  h1{font-size:23px;}
+  .grid-head,.grid-row{grid-template-columns:64px 1fr 1fr;gap:6px;}
+  .slot{font-size:13px;padding:11px 4px;}
+  .rowtime{font-size:13px;}
+  .fields{grid-template-columns:1fr;}
+  .uni-tile{height:62px;}
+  .uni-tile.flinders img{height:104px;}
+  .uni-tile.adelaide img{height:34px;}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;}}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="brandbar">
+    <img class="ccc" src="assets/ccc-logo.png" alt="Charles Campbell College">
+  </div>
+
+  <div class="unis">
+    <div class="uni-tile flinders"><img src="assets/flinders.webp" alt="Flinders University"></div>
+    <div class="uni-tile adelaide"><img src="assets/adelaide.png" alt="Adelaide University"></div>
+  </div>
+
+  <!-- ============ BOOKING VIEW ============ -->
+  <section id="view-booking">
+    <h1>Course Counselling Night — Family University Meetings</h1>
+    <p class="lede">Adelaide University &amp; Flinders University will be attending CCC on Course Counselling night, Thursday 27 August in the Resource Centre. Year 12 families can book a 15-minute meeting with one or both universities. Bring your questions about university, courses, or what comes after school.</p>
+    <div id="booking-banner"></div>
+
+    <hr class="rule">
+
+    <p class="step-label">Choose an available time below</p>
+    <div id="grid"><div class="loading">Loading available times…</div></div>
+
+    <hr class="rule">
+
+    <div class="fields">
+      <div class="field">
+        <label for="sfn">Student first name</label>
+        <input id="sfn" autocomplete="off">
+        <div class="field-error" id="e-sfn"></div>
+      </div>
+      <div class="field">
+        <label for="sln">Student last name</label>
+        <input id="sln" autocomplete="off">
+        <div class="field-error" id="e-sln"></div>
+      </div>
+      <div class="field">
+        <label for="pfn">Parent first name</label>
+        <input id="pfn" autocomplete="off">
+        <div class="field-error" id="e-pfn"></div>
+      </div>
+      <div class="field">
+        <label for="pln">Parent last name</label>
+        <input id="pln" autocomplete="off">
+        <div class="field-error" id="e-pln"></div>
+      </div>
+      <div class="field">
+        <label for="tel">Contact number</label>
+        <input id="tel" inputmode="tel" autocomplete="tel">
+        <div class="field-error" id="e-tel"></div>
+      </div>
+      <div class="field"></div>
+      <div class="field">
+        <label for="em1">Email address</label>
+        <input id="em1" type="email" autocomplete="email">
+        <div class="field-error" id="e-em1"></div>
+      </div>
+      <div class="field">
+        <label for="em2">Confirm email address</label>
+        <input id="em2" type="email" autocomplete="off">
+        <div class="field-error" id="e-em2"></div>
+      </div>
+    </div>
+
+    <button class="btn" id="submit-btn">Confirm booking</button>
+  </section>
+
+  <!-- ============ BOOKING SUCCESS ============ -->
+  <section id="view-success" class="confirm hidden">
+    <h2>Booking confirmed</h2>
+    <p id="success-line"></p>
+    <div class="refbox">
+      <div class="lbl">Booking ID</div>
+      <div class="val" id="success-id"></div>
+    </div>
+    <p class="small" id="success-email"></p>
+  </section>
+
+  <!-- ============ CANCELLATION VIEW ============ -->
+  <section id="view-cancel" class="hidden">
+    <h1>Cancel your booking</h1>
+    <div id="cancel-banner"></div>
+    <div id="cancel-body">
+      <p class="lede" id="cancel-detail"></p>
+      <div class="fields" style="margin-top:22px;">
+        <div class="field">
+          <label for="cid">Booking ID</label>
+          <input id="cid" readonly>
+        </div>
+        <div class="field">
+          <label for="cem">Email address used to book</label>
+          <input id="cem" type="email" autocomplete="email">
+          <div class="field-error" id="e-cem"></div>
+        </div>
+      </div>
+      <div class="disclaimer">Cancelling your booking will make this timeslot available to other families.</div>
+      <button class="btn" id="cancel-btn">Cancel booking</button>
+    </div>
+  </section>
+
+  <!-- ============ CANCELLATION SUCCESS ============ -->
+  <section id="view-cancelled" class="confirm hidden">
+    <h2>Booking cancelled</h2>
+    <p id="cancelled-line"></p>
+    <p>If you'd like to book a new time, return to the booking page.</p>
+    <a class="btn secondary" id="rebook-btn" href="./" style="display:inline-block;text-decoration:none;">Booking page</a>
+  </section>
+
+</div>
+
+<script>
+/* =========================================================
+   CONFIG — replace with the live Power Automate trigger URLs
+   ========================================================= */
+const AVAILABILITY_URL = "https://default73bbf4e906884946aea9bd0bb40ecf.07.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/b7c70fa55d72435095e3743b5147284e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=7JxkVoS0-HGREsEf-CVq9trdIeJKY1_utK3gOyndk_s";
+const BOOKING_URL      = "https://default73bbf4e906884946aea9bd0bb40ecf.07.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/9284596b195640b1a68e03994657eeb5/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Dz0eOXP6u3YXeMw8ECShzyMkNhbYbfuuo6YHDxgZhUA";
+const CANCEL_URL       = "https://default73bbf4e906884946aea9bd0bb40ecf.07.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/10/workflows/3288fc831270454294a4fcf44f0cda93/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=CUQkLdHtVFVpBCa49zqERtA4bjAdC6G6SgCej53ZB9k";
+
+const SESSION_ONE = ["15:20","15:35","15:50","16:05","16:20","16:35","16:50"];
+const SESSION_TWO = ["17:40","17:55","18:10","18:25","18:40","18:55","19:10"];
+
+/* ---------- helpers ---------- */
+const $ = id => document.getElementById(id);
+
+function to12(t){
+  const [h,m] = t.split(":").map(Number);
+  const suffix = h >= 12 ? "pm" : "am";
+  const hh = h % 12 === 0 ? 12 : h % 12;
+  return hh + ":" + String(m).padStart(2,"0") + suffix;
+}
+
+function banner(target, kind, text){
+  target.innerHTML = text ? '<div class="banner ' + kind + '">' + text + '</div>' : "";
+  if(text) target.scrollIntoView({block:"nearest", behavior:"smooth"});
+}
+
+function show(id){
+  ["view-booking","view-success","view-cancel","view-cancelled"]
+    .forEach(v => $(v).classList.toggle("hidden", v !== id));
+}
+
+/* ---------- state ---------- */
+let slots = [];
+let selectedSlotId = null;
+let bookingsOpen = true;
+
+/* =========================================================
+   GRID
+   ========================================================= */
+function cellFor(time, provider){
+  // Merge the two Flinders positions into a single cell.
+  const matching = slots.filter(s => s.time === time && s.provider === provider);
+  const free = matching.find(s => s.available);
+  return { slotId: free ? free.slotId : null, available: !!free && bookingsOpen };
+}
+
+function renderGrid(){
+  const wrap = $("grid");
+  wrap.innerHTML = "";
+
+  [["3:20pm – 5:05pm", SESSION_ONE], ["5:40pm – 7:25pm", SESSION_TWO]].forEach(([label, times]) => {
+    const sec = document.createElement("div");
+    sec.className = "session";
+
+    const rangeEl = document.createElement("p");
+    rangeEl.className = "session-range";
+    rangeEl.textContent = label;
+    sec.appendChild(rangeEl);
+
+    const head = document.createElement("div");
+    head.className = "grid-head";
+    head.innerHTML = "<div>Time</div><div>Flinders</div><div>Adelaide</div>";
+    sec.appendChild(head);
+
+    times.forEach(t => {
+      const row = document.createElement("div");
+      row.className = "grid-row";
+
+      const tEl = document.createElement("div");
+      tEl.className = "rowtime";
+      tEl.textContent = to12(t);
+      row.appendChild(tEl);
+
+      ["Flinders","Adelaide"].forEach(prov => {
+        const cell = cellFor(t, prov);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "slot";
+        btn.textContent = cell.available ? "Available" : "Unavailable";
+        btn.disabled = !cell.available;
+        btn.setAttribute("aria-pressed", String(cell.slotId === selectedSlotId && !!selectedSlotId));
+        btn.setAttribute("aria-label", prov + " at " + to12(t) + (cell.available ? ", available" : ", unavailable"));
+        if(cell.available){
+          btn.addEventListener("click", () => {
+            selectedSlotId = cell.slotId;
+            renderGrid();
+          });
+        }
+        row.appendChild(btn);
+      });
+
+      sec.appendChild(row);
+    });
+
+    wrap.appendChild(sec);
+  });
+}
+
+/* =========================================================
+   LOAD AVAILABILITY
+   ========================================================= */
+async function loadAvailability(){
+  try{
+    const res = await fetch(AVAILABILITY_URL, { method:"GET", cache:"no-store" });
+    const data = await res.json();
+    slots = data.slots || [];
+    bookingsOpen = data.bookingsOpen !== false;
+    renderGrid();
+    if(!bookingsOpen){
+      banner($("booking-banner"), "info", "Bookings for course counselling night are now closed.");
+      $("submit-btn").disabled = true;
+    }
+  }catch(err){
+    $("grid").innerHTML = '<div class="banner error">Available times could not be loaded. Please refresh the page, or try again shortly.</div>';
+  }
+}
+
+/* =========================================================
+   VALIDATION
+   ========================================================= */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function setError(inputId, errId, msg){
+  $(errId).textContent = msg || "";
+  $(inputId).classList.toggle("invalid", !!msg);
+  return !msg;
+}
+
+function validateBooking(){
+  let ok = true;
+  ok = setError("sfn","e-sfn", $("sfn").value.trim() ? "" : "Enter the student's first name") && ok;
+  ok = setError("sln","e-sln", $("sln").value.trim() ? "" : "Enter the student's last name") && ok;
+  ok = setError("pfn","e-pfn", $("pfn").value.trim() ? "" : "Enter the parent's first name") && ok;
+  ok = setError("pln","e-pln", $("pln").value.trim() ? "" : "Enter the parent's last name") && ok;
+  ok = setError("tel","e-tel", $("tel").value.trim() ? "" : "Enter a contact number") && ok;
+
+  const em1 = $("em1").value.trim(), em2 = $("em2").value.trim();
+  ok = setError("em1","e-em1", !em1 ? "Enter an email address" : (EMAIL_RE.test(em1) ? "" : "Enter a valid email address")) && ok;
+  ok = setError("em2","e-em2", !em2 ? "Confirm the email address"
+        : (em1.toLowerCase() !== em2.toLowerCase() ? "Email addresses do not match" : "")) && ok;
+
+  if(!selectedSlotId){
+    banner($("booking-banner"), "error", "Choose an available time before confirming your booking.");
+    ok = false;
+  }
+  return ok;
+}
+
+/* =========================================================
+   SUBMIT BOOKING
+   ========================================================= */
+$("submit-btn").addEventListener("click", async () => {
+  banner($("booking-banner"), "error", "");
+  if(!validateBooking()) return;
+
+  const btn = $("submit-btn");
+  btn.disabled = true;
+  btn.textContent = "Confirming…";
+
+  const payload = {
+    slotId:           selectedSlotId,
+    studentFirstName: $("sfn").value.trim(),
+    studentLastName:  $("sln").value.trim(),
+    parentFirstName:  $("pfn").value.trim(),
+    parentLastName:   $("pln").value.trim(),
+    contactNumber:    $("tel").value.trim(),
+    emailAddress:     $("em1").value.trim()
+  };
+
+  try{
+    const res  = await fetch(BOOKING_URL, {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+
+    if(data.outcome === "success"){
+      $("success-line").textContent =
+        "You're booked to see " + data.provider + " University at " + to12(data.time) + " on Thursday 27 August.";
+      $("success-id").textContent = data.bookingId;
+      $("success-email").textContent =
+        "A confirmation email is on its way to " + payload.emailAddress +
+        ". If it hasn't arrived within a few minutes, check your junk folder or contact jordan.champness823@schools.sa.edu.au.";
+      show("view-success");
+      window.scrollTo({top:0, behavior:"smooth"});
+      return;
+    }
+
+    if(data.outcome === "slotTaken"){
+      selectedSlotId = null;
+      await loadAvailability();
+      banner($("booking-banner"), "error",
+        "This timeslot was just booked by someone else. Please choose another time and submit again.");
+    }
+    else if(data.outcome === "duplicate"){
+      banner($("booking-banner"), "error",
+        "This email address is already booked to see " + data.provider + " University.");
+    }
+    else if(data.outcome === "closed"){
+      bookingsOpen = false;
+      renderGrid();
+      banner($("booking-banner"), "info", "Bookings for course counselling night are now closed.");
+    }
+    else{
+      banner($("booking-banner"), "error",
+        "Your booking could not be completed. Please try again, or contact jordan.champness823@schools.sa.edu.au.");
+    }
+  }catch(err){
+    banner($("booking-banner"), "error",
+      "Your booking could not be completed. Please try again, or contact jordan.champness823@schools.sa.edu.au.");
+  }
+
+  btn.disabled = false;
+  btn.textContent = "Confirm booking";
+});
+
+/* =========================================================
+   CANCELLATION VIEW
+   ========================================================= */
+function initCancel(bookingId, time, provider){
+  show("view-cancel");
+  $("cid").value = bookingId;
+
+  if(time && provider){
+    $("cancel-detail").innerHTML =
+      "You are cancelling your <strong>" + provider + " University</strong> meeting at <strong>" +
+      to12(time) + "</strong> on Thursday 27 August.<br>Enter the email address used to make this booking to confirm.";
+  }else{
+    $("cancel-detail").textContent =
+      "Enter the email address used to make this booking to cancel it.";
+  }
+}
+
+$("cancel-btn").addEventListener("click", async () => {
+  banner($("cancel-banner"), "error", "");
+  const em = $("cem").value.trim();
+  if(!setError("cem","e-cem", !em ? "Enter the email address used to book"
+      : (EMAIL_RE.test(em) ? "" : "Enter a valid email address"))) return;
+
+  const btn = $("cancel-btn");
+  btn.disabled = true;
+  btn.textContent = "Cancelling…";
+
+  try{
+    const res = await fetch(CANCEL_URL, {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ bookingId: $("cid").value.trim(), emailAddress: em })
+    });
+    const data = await res.json();
+
+    if(data.outcome === "success"){
+      $("cancelled-line").textContent =
+        "Your " + data.provider + " University meeting at " + to12(data.time) +
+        " has been cancelled and the timeslot is now available to other families.";
+      show("view-cancelled");
+      window.scrollTo({top:0, behavior:"smooth"});
+      return;
+    }
+
+    banner($("cancel-banner"), "error",
+      "We couldn't find a booking matching that booking ID and email address. Check both against your confirmation email and try again.");
+  }catch(err){
+    banner($("cancel-banner"), "error",
+      "Your booking could not be cancelled. Please try again, or contact jordan.champness823@schools.sa.edu.au.");
+  }
+
+  btn.disabled = false;
+  btn.textContent = "Cancel booking";
+});
+
+/* =========================================================
+   ROUTING
+   ========================================================= */
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  const cancelId = params.get("cancel");
+  if(cancelId){
+    initCancel(cancelId, params.get("t"), params.get("p"));
+  }else{
+    show("view-booking");
+    loadAvailability();
+  }
+})();
+</script>
+</body>
+</html>
