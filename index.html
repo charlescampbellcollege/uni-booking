@@ -191,7 +191,7 @@ input.invalid{border-color:var(--ccc-red);}
   <!-- ============ BOOKING VIEW ============ -->
   <section id="view-booking">
     <h1>Course Counselling Night — Family University Meetings</h1>
-    <p class="lede">Adelaide University &amp; Flinders University will be attending CCC on Course Counselling night, Thursday 27 August in the Resource Centre. Year 12 families can book a 15-minute meeting with one or both universities. Bring your questions about university, courses, or what comes after school.</p>
+    <p class="lede">Adelaide University &amp; Flinders University will be attending CCC on Course Counselling night, Thursday 27 August in the Resource Centre. Year 12 families can book a 15-minute meeting with either Flinders or Adelaide University. Bring your questions about university, courses, or what comes after school.</p>
     <div id="booking-banner"></div>
 
     <hr class="rule">
@@ -483,7 +483,7 @@ $("submit-btn").addEventListener("click", async () => {
     }
     else if(data.outcome === "duplicate"){
       banner($("booking-banner"), "error",
-        "This email address is already booked to see " + data.provider + " University.");
+        "This email address already has a booking. To choose a different time or university, cancel your existing booking first using the link in your confirmation email.");
     }
     else if(data.outcome === "closed"){
       bookingsOpen = false;
